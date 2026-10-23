@@ -1,0 +1,98 @@
+﻿<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101a1b">
+  <title>工程計算機 | Precision Lab</title>
+  <link rel="stylesheet" href="calculator.css">
+  <script src="calculator-engine.js" defer></script>
+  <script src="calculator-ui.js" defer></script>
+</head>
+<body>
+  <main class="workspace">
+    <header class="page-header">
+      <a class="brand" href="./index.html" aria-label="工程計算機首頁"><span class="brand-icon">∑</span> PRECISION <span class="brand-light">LAB</span></a>
+      <span class="local-badge"><span></span> 離線可用 · 本機運算</span>
+    </header>
+    <section class="intro">
+      <p class="eyebrow">TOOLS FOR CURIOUS MINDS / 01</p>
+      <h1>讓複雜，<span>回歸精準。</span></h1>
+      <p>工程計算機 — 從日常算術，到每一個值得驗證的答案。</p>
+    </section>
+    <div class="layout">
+      <section class="calculator" aria-label="工程計算機">
+        <div class="toolbar">
+          <span class="panel-label">SCIENTIFIC CALCULATOR</span>
+          <div class="mode-controls">
+            <div class="angle-toggle" role="group" aria-label="角度單位">
+              <button type="button" data-angle="DEG" aria-pressed="true" title="角度制">DEG</button>
+              <button type="button" data-angle="RAD" aria-pressed="false" title="弧度制">RAD</button>
+            </div>
+            <button type="button" id="engineering" aria-pressed="false" title="切換工程記號（10 的指數為 3 的倍數）">ENG</button>
+          </div>
+        </div>
+        <div class="display">
+          <div class="display-status"><span id="angle-label">DEG · 角度制</span><span id="memory-status">M 空白</span></div>
+          <label class="sr-only" for="expression">輸入算式</label>
+          <input id="expression" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="輸入算式，例如 sin(30) × 2" aria-describedby="message" maxlength="2048">
+          <output id="result" aria-live="polite" aria-label="計算結果">0</output>
+          <p id="message" role="status">準備好了，開始計算吧。</p>
+        </div>
+        <div class="keypad">
+          <div class="memory-row" role="group" aria-label="記憶功能">
+            <button type="button" data-action="memory-clear" title="清除記憶">MC</button>
+            <button type="button" data-action="memory-recall" title="插入記憶值">MR</button>
+            <button type="button" data-action="memory-add" title="將目前算式的結果加至記憶">M+</button>
+            <button type="button" data-action="memory-subtract" title="從記憶減去目前算式的結果">M−</button>
+            <span>FUNCTIONS</span>
+          </div>
+          <div class="scientific-grid" role="group" aria-label="科學函數">
+            <button type="button" data-insert="sin(">sin</button>
+            <button type="button" data-insert="cos(">cos</button>
+            <button type="button" data-insert="tan(">tan</button>
+            <button type="button" data-insert="(">(</button>
+            <button type="button" data-insert=")">)</button>
+            <button type="button" data-action="backspace" aria-label="退格">⌫</button>
+            <button type="button" data-insert="asin(" aria-label="反正弦">sin⁻¹</button>
+            <button type="button" data-insert="acos(" aria-label="反餘弦">cos⁻¹</button>
+            <button type="button" data-insert="atan(" aria-label="反正切">tan⁻¹</button>
+            <button type="button" data-insert="ln(">ln</button>
+            <button type="button" data-insert="log(">log</button>
+            <button type="button" data-insert="sqrt(" aria-label="平方根">√</button>
+            <button type="button" data-insert="^2" aria-label="平方">x²</button>
+            <button type="button" data-insert="^" aria-label="次方">xʸ</button>
+            <button type="button" data-insert="!" aria-label="階乘">n!</button>
+            <button type="button" data-action="reciprocal" aria-label="倒數">1/x</button>
+            <button type="button" data-insert="abs(">abs</button>
+            <button type="button" data-insert="π" aria-label="圓周率">π</button>
+          </div>
+          <div class="number-grid" role="group" aria-label="數字與運算子">
+            <button type="button" data-insert="7">7</button><button type="button" data-insert="8">8</button><button type="button" data-insert="9">9</button><button type="button" class="operator" data-insert="÷">÷</button><button type="button" class="clear" data-action="clear">AC</button>
+            <button type="button" data-insert="4">4</button><button type="button" data-insert="5">5</button><button type="button" data-insert="6">6</button><button type="button" class="operator" data-insert="×">×</button><button type="button" data-insert="e" title="自然常數">e</button>
+            <button type="button" data-insert="1">1</button><button type="button" data-insert="2">2</button><button type="button" data-insert="3">3</button><button type="button" class="operator" data-insert="-">−</button><button type="button" data-insert="ans" title="上一個計算結果">Ans</button>
+            <button type="button" data-insert="0">0</button><button type="button" data-insert=".">.</button><button type="button" data-insert="%" title="將數值除以 100">%</button><button type="button" class="operator" data-insert="+">+</button><button type="button" class="equals" data-action="calculate" aria-label="計算">=</button>
+          </div>
+        </div>
+        <div class="calculator-footer"><span><kbd>Enter</kbd> 計算</span><span><kbd>Esc</kbd> 清除</span><span>支援鍵盤輸入</span></div>
+      </section>
+      <aside class="sidebar">
+        <section class="history-panel" aria-labelledby="history-title">
+          <div class="section-heading"><h2 id="history-title">計算紀錄 <span id="history-count">00</span></h2><button type="button" id="clear-history">清空</button></div>
+          <div id="history-empty" class="empty-state"><span aria-hidden="true">↶</span><h3>每一步，都有跡可循。</h3><p>最近 10 筆計算會顯示在這裡。<br>點選紀錄，即可帶回算式。</p></div>
+          <ol id="history-list" aria-label="最近計算紀錄"></ol>
+          <p class="privacy-note">紀錄僅保留於本頁，重新整理即清除。</p>
+        </section>
+        <section class="notes-panel" aria-labelledby="notes-title">
+          <p class="eyebrow">A LITTLE FIELD GUIDE</p><h2 id="notes-title">把靈感，寫成算式。</h2>
+          <button type="button" class="example" data-example="sin(30)^2 + cos(30)^2"><span>三角恆等式</span><code>sin(30)² + cos(30)²</code><span aria-hidden="true">↗</span></button>
+          <button type="button" class="example" data-example="1 / (2 * π * 1000 * 0.000001)"><span>RC 截止頻率 · Hz</span><code>1 / (2π × 1000 × 10⁻⁶)</code><span aria-hidden="true">↗</span></button>
+          <p class="usage-note">DEG 使用度數，RAD 使用弧度。<br>log 為底數 10，ln 為自然對數。<br>% 代表除以 100；ENG 切換工程記號。</p>
+        </section>
+      </aside>
+    </div>
+    <footer class="page-footer"><span>PRECISION LAB / 工程計算工具</span><span>顯示最多 12 位有效數字 · 浮點運算結果請依需求驗證</span></footer>
+    <noscript>請啟用 JavaScript 以使用計算機。本程式不需連線。</noscript>
+  </main>
+</body>
+</html>

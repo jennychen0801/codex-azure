@@ -1,0 +1,38 @@
+﻿# Dependencies and generated output
+node_modules/
+dist/
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# Local Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Secrets and machine-local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+.aws/
+.azure/
+.codex/
+.agents/
+
+# Editors, operating systems and temporary files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log
+*.tmp
+*.swp
+*~
